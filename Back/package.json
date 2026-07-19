@@ -1,0 +1,29 @@
+{
+  "name": "agenda-centro-estetico-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "API para consultar y reservar temporalmente los horarios del centro estético.",
+  "main": "src/server.js",
+  "scripts": {
+    "crear-admin": "node scripts/crear-admin.js",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.3",
+    "cors": "2.8.6",
+    "dotenv": "17.4.2",
+    "express": "5.2.1",
+    "express-rate-limit": "8.6.0",
+    "jsonwebtoken": "9.0.3",
+    "mysql2": "3.23.0"
+  },
+  "devDependencies": {
+    "supertest": "7.2.2"
+  }
+}

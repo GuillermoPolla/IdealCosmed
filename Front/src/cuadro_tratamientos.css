@@ -1,0 +1,125 @@
+/* Tarjetas de tratamientos: se importa después de styles.css. */
+
+.treatment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  border-top: 0;
+}
+
+.treatment-card,
+.treatment-card:last-child {
+  position: relative;
+  min-width: 0;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 68%),
+    rgba(255, 255, 255, 0.018);
+  overflow: hidden;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.treatment-card::before {
+  position: absolute;
+  top: 0;
+  right: 28px;
+  left: 28px;
+  height: 2px;
+  border-radius: 0 0 999px 999px;
+  content: "";
+  background: linear-gradient(90deg, transparent, #d8aeba, transparent);
+  opacity: 0.65;
+}
+
+.treatment-card:hover {
+  border-color: rgba(216, 174, 186, 0.46);
+  background:
+    linear-gradient(145deg, rgba(216, 174, 186, 0.1), transparent 70%),
+    rgba(255, 255, 255, 0.028);
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.treatment-card > span {
+  width: fit-content;
+  min-width: 39px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 62px;
+  padding: 5px 10px;
+  border: 1px solid rgba(216, 174, 186, 0.3);
+  border-radius: 999px;
+  color: #e2bbc6;
+  background: rgba(216, 174, 186, 0.08);
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
+.treatment-card h3 {
+  min-height: 2.4em;
+  margin-top: auto;
+  margin-bottom: 14px;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  line-height: 1.17;
+}
+
+.treatment-card p {
+  margin-bottom: 0;
+  line-height: 1.68;
+}
+
+@media (max-width: 880px) {
+  .treatment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .treatment-card,
+  .treatment-card:last-child {
+    min-height: 280px;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .treatment-card > span {
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .treatment-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .treatment-card,
+  .treatment-card:last-child {
+    min-height: 245px;
+    padding: 26px;
+    border-radius: 18px;
+  }
+
+  .treatment-card > span {
+    margin-bottom: 42px;
+  }
+
+  .treatment-card h3 {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .treatment-card {
+    transform: none !important;
+  }
+}
