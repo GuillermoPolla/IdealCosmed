@@ -1,6 +1,16 @@
 import "dotenv/config";
 import mysql from "mysql2";
 
+const ssl = process.env.DB_SSL_CA_BASE64
+  ? {
+      ca: Buffer.from(
+        process.env.DB_SSL_CA_BASE64,
+        "base64",
+      ).toString("utf8"),
+      rejectUnauthorized: true,
+    }
+  : undefined;
+
 const nativePool = mysql.createPool({
   host: process.env.DB_HOST || "127.0.0.1",
   port: Number(process.env.DB_PORT) || 3306,
@@ -13,14 +23,16 @@ const nativePool = mysql.createPool({
   enableKeepAlive: true,
   dateStrings: true,
   timezone: "-03:00",
+  ...(ssl ? { ssl } : {}),
 });
 
-// Las reservas vencen según la hora de Montevideo. Se configura cada
-// conexión del pool para que MySQL y Node utilicen la misma zona horaria.
 nativePool.on("connection", (connection) => {
   connection.query("SET time_zone = '-03:00'", (error) => {
     if (error) {
-      console.error("No se pudo configurar la zona horaria de MySQL:", error.message);
+      console.error(
+        "No se pudo configurar la zona horaria de MySQL:",
+        error.message,
+      );
     }
   });
 });
