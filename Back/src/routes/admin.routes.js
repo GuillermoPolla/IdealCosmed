@@ -5,6 +5,7 @@ import {
   iniciarSesion,
   liberar,
   marcarOcupado,
+  obtenerAgenda,
 } from "../controllers/admin.controller.js";
 import { autenticarAdministrador } from "../middleware/auth.middleware.js";
 import { limitarLogin } from "../middleware/rate-limit.middleware.js";
@@ -14,6 +15,7 @@ export const adminRouter = Router();
 adminRouter.post("/login", limitarLogin, iniciarSesion);
 
 adminRouter.use(autenticarAdministrador);
+adminRouter.get("/agenda", obtenerAgenda);
 adminRouter.patch("/turnos/ocupar", marcarOcupado);
 adminRouter.post("/turnos/liberar", liberar);
 adminRouter.post("/fechas/bloquear", bloquear);

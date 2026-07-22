@@ -6,6 +6,7 @@ import {
 } from "../config/auth.js";
 import {
   bloquearFecha,
+  buscarAgendaAdministrativa,
   buscarAdministradorPorUsuario,
   desbloquearFecha,
   liberarTurno,
@@ -73,6 +74,44 @@ export async function iniciarSesion(req, res, next) {
   }
 }
 
+export async function obtenerAgenda(req, res, next) {
+  const { fecha } = req.query;
+
+  if (!esFechaValida(fecha)) {
+    return next(
+      new AppError("La fecha debe tener el formato válido AAAA-MM-DD", 400),
+    );
+  }
+
+  try {
+    const agenda = await buscarAgendaAdministrativa(fecha);
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        fecha,
+        bloqueada: Boolean(agenda.bloqueo),
+        bloqueo: agenda.bloqueo
+          ? {
+              motivo: agenda.bloqueo.motivo,
+              creadoEn: agenda.bloqueo.creado_en,
+            }
+          : null,
+        horarios: agenda.horarios.map((horario) => ({
+          fecha: horario.fecha,
+          horaInicio: horario.hora_inicio,
+          horaFin: horario.hora_fin,
+          estado: horario.estado,
+          pendienteHasta: horario.pendiente_hasta,
+          notaAdministrativa: horario.nota_administrativa,
+        })),
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 export async function marcarOcupado(req, res, next) {
   const { fecha, hora: receivedTime, nota = "" } = req.body ?? {};
 
@@ -83,7 +122,12 @@ export async function marcarOcupado(req, res, next) {
       throw new AppError("La nota no puede superar los 255 caracteres", 400);
     }
 
-    const turno = await ocuparTurno(fecha, hora, nota);
+    const turno = await ocuparTurno(
+      fecha,
+      hora,
+      nota,
+      req.administrador.id,
+    );
 
     return res.status(200).json({
       success: true,
