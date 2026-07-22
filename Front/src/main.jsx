@@ -3,8 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
 import "./styles.css";
-import "./treatments-cards.css";
-import "./responsive-layout.css";
+import "./cuadro_tratamientos.css";
+import "./responsive.css";
 import "./admin.css";
 
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
