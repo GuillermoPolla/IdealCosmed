@@ -104,8 +104,7 @@ function App() {
                 <h2>Opciones de cuidado para distintas necesidades.</h2>
               </div>
               <p>
-                Más adelante reemplazaremos estos ejemplos por los tratamientos
-                reales y sus descripciones.
+                La consulta inicial es gratuita y permite evaluar el estado de la piel, definir objetivos y recomendar un plan de tratamiento personalizado.
               </p>
             </div>
 
